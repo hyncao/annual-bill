@@ -25,6 +25,39 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <script>
+      !(function (n) {
+        var e = n.document,
+          t = e.documentElement,
+          i = 750,
+          d = i / 100,
+          o = 'orientationchange' in n ? 'orientationchange' : 'resize',
+          a = function () {
+            var n = t.clientWidth || 320;
+            t.style.fontSize = n / d + 'px';
+          };
+        e.addEventListener &&
+          (n.addEventListener(o, a, !1),
+          e.addEventListener('DOMContentLoaded', a, !1));
+      })(window);
+
+      if (window.location.href.indexOf('debugger=true') > -1) {
+        localStorage.setItem('jujie_debugger', true);
+      }
+      if (window.location.href.indexOf('debugger=false') > -1) {
+        localStorage.removeItem('jujie_debugger');
+      }
+      if (window.localStorage && localStorage.getItem('jujie_debugger')) {
+        document.write(
+          '<script src="//cdn.jsdelivr.net/npm/eruda" type="text/javascript"><\/script>'
+        );
+      }
+    </script>
+    <script>
+      if (window.localStorage && localStorage.getItem('jujie_debugger')) {
+        eruda.init();
+      }
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
