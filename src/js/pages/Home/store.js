@@ -7,6 +7,12 @@ export const initState = {
   // 是否播放BGM
   musicPlay: false,
 
+  // 首页翻动动画控制
+  homePageFoldStart: false,
+
+  // 协议是否勾选
+  agreementRead: false,
+
   // 显示账单组件
   showBill: false,
 

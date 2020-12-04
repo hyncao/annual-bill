@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { useSpring, animated } from 'react-spring';
+import React from 'react';
+import { useSpring } from 'react-spring';
+import { useSpringWave } from 'js/hooks';
 import cn from 'classnames';
 import { TypographyAnimate } from 'js/components';
 import styles from './index.module.scss';
@@ -7,30 +8,22 @@ import mobileImg from 'assets/images/p6/mobile.png';
 import personImg from 'assets/images/p6/person.png';
 
 const Part = ({ start }) => {
-  const { personDelta } = useSpring({
-    from: { personDelta: 0 },
-    to: { personDelta: start ? 1 : 0 },
-    config: { tension: 200, friction: 100 },
-  });
-  // 人物图片top css 值
   const personTopRem = 4.5;
-  const personStyle = {
-    transform: personDelta
-      .interpolate({
-        range: [0, 0.5, 0.55, 0.6, 0.7, 0.8, 0.9, 1],
-        output: [
-          window.innerHeight - (window.innerWidth / 7.5) * personTopRem,
-          10,
-          0,
-          -4,
-          4,
-          -2,
-          2,
-          0,
-        ],
-      })
-      .interpolate((personDelta) => `translateY(${personDelta}px)`),
-  };
+  const [personStyle, animated] = useSpringWave({
+    start,
+    config: { tension: 200, friction: 100 },
+    transformDeclare: [
+      'translateY',
+      window.innerHeight - (window.innerWidth / 7.5) * personTopRem,
+      0,
+    ],
+  });
+  const [dotStyle] = useSpringWave({
+    delay: 2000,
+    start,
+    config: { tension: 200, friction: 50 },
+    transformDeclare: ['translateX', -70, 0],
+  });
   const { mobileDelta } = useSpring({
     delay: 200,
     from: { mobileDelta: 0 },
@@ -63,11 +56,11 @@ const Part = ({ start }) => {
           className={styles.up}
           itemClassName={styles.upItem}
           delay={500}
-          deltaDelay={100}
+          deltaDelay={20}
           transformType="translateY"
           from={80}
           to={0}
-          config={{ tension: 250, friction: 60 }}
+          config={{ tension: 250, friction: 100 }}
           start={start}
         >
           <p className={cn(styles.white, styles.top)}>这一年</p>
@@ -76,7 +69,7 @@ const Part = ({ start }) => {
           <p className={styles.bold}>QQ、飞猪......</p>
         </TypographyAnimate>
 
-        <div className={styles.dot} />
+        <animated.div className={styles.dot} style={dotStyle} />
 
         <TypographyAnimate
           className={styles.down}
@@ -86,7 +79,7 @@ const Part = ({ start }) => {
           transformType="translateY"
           from={40}
           to={0}
-          config={{ friction: 100 }}
+          config={{ tension: 100, friction: 200 }}
           start={start}
           rotate={true}
         >

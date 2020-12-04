@@ -40,3 +40,22 @@ export function debounce(func, wait = 500, isImmediate) {
     }
   };
 }
+
+export class MyCtx {
+  constructor(ctx) {
+    this.ctx = ctx;
+    for (let i in ctx) {
+      const temp = this.ctx[i];
+      if (typeof temp === 'function') {
+        this.ctx[i] = (...rest) => {
+          temp.apply(this.ctx, rest);
+          return this.ctx;
+        };
+      }
+    }
+    return this.ctx;
+  }
+}
+
+export const rem2Px = (rem) =>
+  (window.document.documentElement.clientWidth / 7.5) * rem;

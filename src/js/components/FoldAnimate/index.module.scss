@@ -1,0 +1,12 @@
+.box {
+  display: flex;
+
+  &.hide{
+    display: none;
+  }
+
+  .item {
+    flex: 1;
+    margin-left: -0.02rem;
+  }
+}

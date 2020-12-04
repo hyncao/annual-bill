@@ -10,10 +10,10 @@
     align-items: center;
     z-index: 9;
     left: 0;
-    top: 0.36rem;
+    top: 0.44rem;
     width: 2rem;
     height: 0.6rem;
-    padding-left: 0.36rem;
+    padding-left: 0.44rem;
     box-sizing: border-box;
     background-color: rgba(255, 255, 255, 0.4);
     font-size: 0.26rem;
@@ -25,8 +25,8 @@
   .fixedMusic {
     position: fixed;
     z-index: 9;
-    right: 0.36rem;
-    top: 0.36rem;
+    right: 0.44rem;
+    top: 0.53rem;
     width: 0.6rem;
     height: 0.6rem;
 
@@ -101,5 +101,150 @@
       z-index: 1;
       opacity: 1;
     }
+  }
+}
+
+.home {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #3686ff url('../../../assets/images/home/bg.png') top center
+    no-repeat;
+  background-size: cover;
+
+  .telecom {
+    position: absolute;
+    z-index: 2;
+    top: 0.63rem;
+    left: 0.43rem;
+    width: 1.33rem;
+  }
+
+  .fold {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    .pic {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .slogan {
+      position: absolute;
+      top: 2.62rem;
+      left: 50%;
+      width: 5.2rem;
+      margin-left: -2.6rem;
+    }
+
+    .title {
+      position: absolute;
+      top: 5.5rem;
+      left: 50%;
+      width: 5.6rem;
+      height: 1rem;
+      overflow: hidden;
+      margin-left: -2.8rem;
+
+      .titleImg {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    .btn {
+      position: absolute;
+      bottom: 2.15rem;
+      left: 50%;
+      width: 3.6rem;
+      height: 1rem;
+      overflow: hidden;
+      margin-left: -1.8rem;
+
+      .btnImg {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    .agreement {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      bottom: 1.8rem;
+      width: 100%;
+      left: 0;
+      color: #fff;
+      font-size: 0.18rem;
+
+      .dot {
+        display: inline-block;
+        width: 0.17rem;
+        height: 0.17rem;
+        border: 0.01rem solid #fff;
+        border-radius: 0.04rem;
+        margin-right: 0.1rem;
+        box-sizing: border-box;
+        vertical-align: middle;
+      }
+
+      .checked {
+        width: 0.17rem;
+        height: 0.17rem;
+        margin-right: 0.1rem;
+        vertical-align: middle;
+      }
+
+      .link {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.rule {
+  width: 6.3rem;
+  border-radius: 0.2rem;
+  overflow: hidden;
+  background-color: #fff;
+
+  .title {
+    height: 1rem;
+    line-height: 1rem;
+    text-align: center;
+    background-color: #ebebeb;
+    font-size: 0.34rem;
+  }
+
+  .content {
+    font-size: 0.28rem;
+    line-height: 0.46rem;
+    color: #666;
+    padding: 0.5rem 0.4rem;
+  }
+
+  .btn {
+    width: 3.3rem;
+    height: 0.7rem;
+    line-height: 0.7rem;
+    text-align: center;
+    background-color: #367dff;
+    color: #fff;
+    font-size: 0.28rem;
+    border-radius: 0.4rem;
+    margin: auto;
+    margin-bottom: 0.5rem;
   }
 }

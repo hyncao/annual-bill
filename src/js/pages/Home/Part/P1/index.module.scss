@@ -2,8 +2,8 @@
   position: relative;
   width: 100%;
   height: 100%;
-  background: #3686ff url('../../../../../assets/images/p1/bg.png') center bottom
-    no-repeat;
+  background: #3686ff url('../../../../../assets/images/p5/bg.png') center
+    bottom no-repeat;
   background-size: 100%;
   overflow: hidden;
 
@@ -20,16 +20,13 @@
   }
 
   .up {
-    height: 2.4rem;
+    height: 1.2rem;
     overflow: hidden;
   }
 
   .down {
     font-size: 0.3rem;
     color: #fff;
-  }
-
-  .upItem {
   }
 
   .top {
@@ -43,30 +40,71 @@
   }
 
   .bold {
-    color: #fff881;
+    color: #fdff8d;
     font-size: 0.44rem;
     font-weight: bold;
     text-shadow: 0 0;
     margin-bottom: 0.2rem;
+    margin-right: 0.1rem;
   }
 
   .rotate {
     font-size: 0.26rem;
   }
 
-  .mobileImg {
-    position: absolute;
-    width: 7rem;
-    left: 50%;
-    top: 9rem;
-    margin-left: -3.5rem;
+  .topBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5rem 0.4rem;
+
+    .item {
+      position: relative;
+      flex: 1;
+      margin: 0 0.15rem;
+
+      img {
+        display: block;
+        width: 100%;
+      }
+
+      p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 0.05rem);
+        font-size: 0.22rem;
+        color: #fff;
+      }
+    }
   }
 
-  .personImg {
+  .canvas {
+    display: block;
+    margin: -1.8rem auto 0 auto;
+  }
+
+  .btnBox {
     position: absolute;
-    width: 3.5rem;
-    left: 50%;
-    top: 4.5rem;
-    margin-left: -1.45rem;
+    left: 0;
+    bottom: 1.7rem;
+    width: 100%;
+    height: 1rem;
+    text-align: center;
+    overflow: hidden;
+
+    img {
+      width: 3rem;
+      vertical-align: top;
+    }
+  }
+
+  .bottom {
+    position: absolute;
+    left: 0;
+    bottom: 1.5rem;
+    width: 100%;
+    text-align: center;
+    color: #fff;
   }
 }
