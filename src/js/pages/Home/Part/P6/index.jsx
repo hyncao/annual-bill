@@ -1,53 +1,49 @@
 import React from 'react';
-import { useSpring } from 'react-spring';
+import { useSpring, animated } from 'react-spring';
 import { useSpringWave } from 'js/hooks';
 import cn from 'classnames';
 import { TypographyAnimate } from 'js/components';
 import styles from './index.module.scss';
-import mobileImg from 'assets/images/p6/mobile.png';
-import personImg from 'assets/images/p6/person.png';
+import bucketImg from 'assets/images/p6/bucket.png';
+import mail0Img from 'assets/images/p6/mail0.png';
+import mail1Img from 'assets/images/p6/mail1.png';
+import mail2Img from 'assets/images/p6/mail2.png';
 
 const Part = ({ start }) => {
-  const personTopRem = 4.5;
-  const [personStyle, animated] = useSpringWave({
-    start,
-    config: { tension: 200, friction: 100 },
-    transformDeclare: [
-      'translateY',
-      window.innerHeight - (window.innerWidth / 7.5) * personTopRem,
-      0,
-    ],
-  });
   const [dotStyle] = useSpringWave({
     delay: 2000,
     start,
     config: { tension: 200, friction: 50 },
     transformDeclare: ['translateX', -70, 0],
   });
-  const { mobileDelta } = useSpring({
-    delay: 200,
-    from: { mobileDelta: 0 },
-    to: { mobileDelta: start ? 1 : 0 },
-    config: { tension: 250, friction: 100 },
+  const { bucketDelta } = useSpring({
+    delay: 500,
+    from: { bucketDelta: 0 },
+    to: { bucketDelta: start ? 1 : 0 },
+    config: { tension: 250, friction: 70 },
   });
-  const mobileStyle = {
-    opacity: mobileDelta.interpolate({
-      range: [0, 0.7, 1],
+  const bucketStyle = {
+    opacity: bucketDelta.interpolate({
+      range: [0, 0.2, 1],
       output: [0, 1, 1],
     }),
-    transform: mobileDelta
+    transform: bucketDelta
       .interpolate({
-        range: [0, 0.6, 0.7, 0.8, 0.9, 1],
-        output: [0, 1.4, 0.9, 1.1, 0.98, 1],
+        range: [0, 0.64, 0.74, 0.84, 0.94, 0.98, 1],
+        output: [0, 1.05, 1.05, 0.95, 1.01, 0.99, 1],
       })
-      .interpolate((mobileDelta) => {
-        const scale = mobileDelta;
-        const endOutput = 0.8; // 旋转动画截止output
-        const rotate =
-          mobileDelta < endOutput ? (mobileDelta * 180) / endOutput : 180;
-        return `scale(${scale}) rotate(${rotate + 180}deg)`;
+      .interpolate((bucketDelta) => {
+        const scale = bucketDelta;
+        return `scale(${scale})`;
       }),
   };
+
+  const mailList = [mail0Img, mail1Img, mail2Img];
+  const mailStyle = useSpring({
+    delay: 1000,
+    from: { opacity: 0 },
+    to: { opacity: start ? 1 : 0 },
+  });
 
   return (
     <div className={styles.content}>
@@ -63,10 +59,13 @@ const Part = ({ start }) => {
           config={{ tension: 250, friction: 100 }}
           start={start}
         >
-          <p className={cn(styles.white, styles.top)}>这一年</p>
-          <p className={styles.white}>你喜欢的APP有好多，</p>
-          <p className={styles.bold}>微信、淘宝、支付宝、</p>
-          <p className={styles.bold}>QQ、飞猪......</p>
+          <p className={styles.white}>这一年</p>
+          <p className={styles.white}>你收到来自189邮箱投递的</p>
+          <p>
+            <span className={styles.white}>电信账单类邮件共</span>
+            <span className={styles.bold}>20</span>
+            <span className={styles.white}>封，</span>
+          </p>
         </TypographyAnimate>
 
         <animated.div className={styles.dot} style={dotStyle} />
@@ -83,21 +82,25 @@ const Part = ({ start }) => {
           start={start}
           rotate={true}
         >
-          <p className={styles.rotate}>其实不论什么时候，你身边都有我！</p>
+          <p className={styles.white}>忙碌时无需担心，</p>
+          <p className={styles.white}>你的每笔消费我们都贴心帮你记下了~</p>
         </TypographyAnimate>
       </div>
       <animated.img
-        style={mobileStyle}
-        className={styles.mobileImg}
-        src={mobileImg}
-        alt="mobileImg"
+        className={cn('observe', styles.bucketImg)}
+        style={bucketStyle}
+        src={bucketImg}
+        alt="bucketImg"
       />
-      <animated.img
-        style={personStyle}
-        className={styles.personImg}
-        src={personImg}
-        alt="personImg"
-      />
+      {mailList.map((src, k) => (
+        <animated.img
+          key={k}
+          style={mailStyle}
+          className={cn('flowAnimate', styles.mail, styles[`mail${k}`])}
+          src={src}
+          alt="mail"
+        />
+      ))}
     </div>
   );
 };

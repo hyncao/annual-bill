@@ -1,60 +1,53 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { useSpring, animated } from 'react-spring';
+import React, { useRef } from 'react';
+import { useSpringWave, useRadar } from 'js/hooks';
 import cn from 'classnames';
-import { TypographyAnimate } from 'js/components';
+import { TypographyAnimate, Btn } from 'js/components';
+import { rem2Px } from 'js/utils';
+import { canvasShowImgSpeed } from 'config';
 import styles from './index.module.scss';
-import mobileImg from 'assets/images/p6/mobile.png';
-import personImg from 'assets/images/p6/person.png';
+import picImg from 'assets/images/p2/pic.png';
+import topImg from 'assets/images/p2/top.png';
 
 const Part = ({ start }) => {
-  const { personDelta } = useSpring({
-    from: { personDelta: 0 },
-    to: { personDelta: start ? 1 : 0 },
+  const canvasRef = useRef();
+  const canvasMarginLeft = rem2Px(0.72);
+  useRadar({
+    canvasRef,
+    start,
+    width: window.document.documentElement.clientWidth - canvasMarginLeft * 2,
+    img: picImg,
+    speed: canvasShowImgSpeed,
+  });
+  const [dotStyle, animated] = useSpringWave({
+    delay: 2000,
+    start,
+    config: { tension: 200, friction: 50 },
+    transformDeclare: ['translateX', -70, 0],
+  });
+  const [canvasStyle] = useSpringWave({
+    start,
+    config: { tension: 200, friction: 50 },
+    transformDeclare: ['scale', 0, 1],
+  });
+  const topConfig = {
+    start,
     config: { tension: 200, friction: 100 },
-  });
-  // 人物图片top css 值
-  const personTopRem = 4.5;
-  const personStyle = {
-    transform: personDelta
-      .interpolate({
-        range: [0, 0.5, 0.55, 0.6, 0.7, 0.8, 0.9, 1],
-        output: [
-          window.innerHeight - (window.innerWidth / 7.5) * personTopRem,
-          10,
-          0,
-          -4,
-          4,
-          -2,
-          2,
-          0,
-        ],
-      })
-      .interpolate((personDelta) => `translateY(${personDelta}px)`),
+    transformDeclare: ['translateY', 100, 0],
+    otherAnimate: {
+      opacity: (x) => x,
+    },
   };
-  const { mobileDelta } = useSpring({
-    delay: 200,
-    from: { mobileDelta: 0 },
-    to: { mobileDelta: start ? 1 : 0 },
-    config: { tension: 250, friction: 100 },
+  const [top1Style] = useSpringWave({
+    ...topConfig,
+    delay: 1000,
   });
-  const mobileStyle = {
-    opacity: mobileDelta.interpolate({
-      range: [0, 0.7, 1],
-      output: [0, 1, 1],
-    }),
-    transform: mobileDelta
-      .interpolate({
-        range: [0, 0.6, 0.7, 0.8, 0.9, 1],
-        output: [0, 1.4, 0.9, 1.1, 0.98, 1],
-      })
-      .interpolate((mobileDelta) => {
-        const scale = mobileDelta;
-        const endOutput = 0.8; // 旋转动画截止output
-        const rotate =
-          mobileDelta < endOutput ? (mobileDelta * 180) / endOutput : 180;
-        return `scale(${scale}) rotate(${rotate + 180}deg)`;
-      }),
-  };
+
+  const [btnStyle] = useSpringWave({
+    delay: 2600,
+    start,
+    config: { tension: 200, friction: 100 },
+    transformDeclare: ['translateY', 100, 0],
+  });
 
   return (
     <div className={styles.content}>
@@ -71,12 +64,13 @@ const Part = ({ start }) => {
           start={start}
         >
           <p className={cn(styles.white, styles.top)}>这一年</p>
-          <p className={styles.white}>你喜欢的APP有好多，</p>
-          <p className={styles.bold}>微信、淘宝、支付宝、</p>
-          <p className={styles.bold}>QQ、飞猪......</p>
+          <p>
+            <span className={styles.bold}>0-6</span>
+            <span className={styles.white}>是你最黏手机的时候</span>
+          </p>
         </TypographyAnimate>
 
-        <div className={styles.dot} />
+        <animated.div className={styles.dot} style={dotStyle} />
 
         <TypographyAnimate
           className={styles.down}
@@ -86,25 +80,42 @@ const Part = ({ start }) => {
           transformType="translateY"
           from={40}
           to={0}
-          config={{ friction: 100 }}
+          config={{ friction: 150 }}
           start={start}
           rotate={true}
         >
-          <p className={styles.rotate}>其实不论什么时候，你身边都有我！</p>
+          <p className={styles.rotate}>我知道，你几乎整天都捧着手机</p>
+          <p className={styles.rotate}>无拘无束，但耳边总感觉少了点谁的唠叨</p>
         </TypographyAnimate>
       </div>
-      <animated.img
-        style={mobileStyle}
-        className={styles.mobileImg}
-        src={mobileImg}
-        alt="mobileImg"
+      <div className={styles.topBox}>
+        <animated.div className={cn(styles.item)} style={top1Style}>
+          <img className="observe" src={topImg} alt="top" />
+          <div className={styles.one}>Top1</div>
+          <p>0-6点</p>
+        </animated.div>
+      </div>
+      <animated.canvas
+        style={canvasStyle}
+        className={styles.canvas}
+        ref={canvasRef}
       />
-      <animated.img
-        style={personStyle}
-        className={styles.personImg}
-        src={personImg}
-        alt="personImg"
-      />
+      <div className={styles.btnBox}>
+        <animated.div style={btnStyle}>
+          <Btn>一键补充流量</Btn>
+        </animated.div>
+      </div>
+      <TypographyAnimate
+        className={styles.bottom}
+        delay={3000}
+        transformType="translateY"
+        from={80}
+        to={0}
+        config={{ tension: 250, friction: 60 }}
+        start={start}
+      >
+        <p>救急包、深夜包、天包、月.....即刻补充~</p>
+      </TypographyAnimate>
     </div>
   );
 };

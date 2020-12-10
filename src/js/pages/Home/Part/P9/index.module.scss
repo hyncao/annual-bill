@@ -1,0 +1,174 @@
+.content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #3686ff url('../../../../../assets/images/p0/bg.png') center
+    bottom no-repeat;
+  background-size: 100%;
+  overflow: hidden;
+
+  .text {
+    margin-top: 1.2rem;
+    margin-left: 0.4rem;
+  }
+
+  .dot {
+    width: 0.3rem;
+    height: 0.07rem;
+    background-color: #fff;
+    margin-bottom: 0.3rem;
+  }
+
+  .up {
+    height: 1.2rem;
+    overflow: hidden;
+
+    .white {
+      display: inline-block;
+      color: #fff;
+      font-size: 0.3rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .bold {
+      display: inline-block;
+      color: #fdff8d;
+      font-size: 0.44rem;
+      font-weight: bold;
+      text-shadow: 0 0;
+    }
+  }
+
+  .down {
+    font-size: 0.3rem;
+
+    .white {
+      display: inline-block;
+      font-size: 0.26rem;
+      color: #fff;
+      margin-bottom: 0.1rem;
+    }
+
+    .yellow {
+      font-size: 0.26rem;
+      color: #fff881;
+    }
+  }
+
+  .keyword {
+    position: absolute;
+    left: 0;
+    bottom: -0.05rem;
+    width: 100%;
+  }
+
+  .btn {
+    position: absolute;
+    bottom: 0.69rem;
+    width: 2.96rem;
+
+    &.btnShareImg {
+      left: 0.62rem;
+    }
+
+    &.btnCardImg {
+      right: 0.62rem;
+    }
+  }
+
+  .tipsImg {
+    position: absolute;
+    left: 2.11rem;
+    bottom: 1.52rem;
+    width: 1.59rem;
+  }
+}
+
+.modal {
+  .modalContent {
+    width: 6.63rem;
+    background-color: #fff;
+    border-radius: 0.2rem;
+    overflow: hidden;
+
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 1.2rem;
+      padding: 0 0.42rem;
+
+      p {
+        font-size: 0.39rem;
+        color: #3686ff;
+      }
+
+      img {
+        width: 1.09rem;
+      }
+    }
+
+    .bar {
+      height: 0.22rem;
+      background-color: #1f416b;
+      border-radius: 0.22rem;
+      box-shadow: 0 0.05rem #c6cbd0;
+      margin: 0 0.42rem;
+    }
+
+    .card {
+      margin: -0.11rem 0.6rem 0;
+      background: linear-gradient(to bottom, #66a9ff, #c8e5ff);
+      border-radius: 0.2rem;
+      overflow: hidden;
+      box-shadow: 0 0.1rem 0.2rem rgba(98, 168, 255, 0.4);
+
+      img {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    .bottom {
+      display: flex;
+      align-items: center;
+      background-color: #f5f5f5;
+      height: 1.4rem;
+      padding: 0 0.42rem;
+      margin-top: 0.5rem;
+
+      img {
+        width: 1rem;
+      }
+
+      .detail {
+        margin-left: 0.24rem;
+
+        .bold {
+          font-size: 0.34rem;
+          text-shadow: 0 0;
+        }
+
+        .gray {
+          font-size: 0.24rem;
+          color: #999;
+          margin-top: 0.14rem;
+        }
+      }
+    }
+  }
+
+  .modalClose {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.8rem;
+    height: 0.54rem;
+    font-size: 0.28rem;
+    margin: 0.6rem auto 0;
+    color: #fff;
+    border: 0.02rem solid #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 0.54rem;
+  }
+}

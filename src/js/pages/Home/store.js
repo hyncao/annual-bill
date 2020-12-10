@@ -7,9 +7,6 @@ export const initState = {
   // 是否播放BGM
   musicPlay: false,
 
-  // 首页翻动动画控制
-  homePageFoldStart: false,
-
   // 协议是否勾选
   agreementRead: false,
 
@@ -18,6 +15,9 @@ export const initState = {
 
   // 账单页面翻页控制
   slidePageDisabled: false,
+
+  // 账单页面touchmove移动数量
+  slidePageTranslate: 0,
 
   // 账单页面当前展示的页数
   slidePageCurrentIndex: 0,

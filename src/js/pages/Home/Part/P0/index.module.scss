@@ -22,70 +22,43 @@
   .up {
     height: 2rem;
     overflow: hidden;
+
+    .white {
+      display: inline-block;
+      color: #fff;
+      font-size: 0.3rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .bold {
+      color: #fdff8d;
+      font-size: 0.44rem;
+      font-weight: bold;
+      text-shadow: 0 0;
+    }
+
+    .day {
+      margin: 0 0.05rem;
+    }
+
+    .top {
+      display: inline-block;
+      margin-bottom: 0.2rem;
+    }
   }
 
   .down {
     font-size: 0.3rem;
     color: #fff;
-  }
 
-  .white {
-    display: inline-block;
-    color: #fff;
-    font-size: 0.3rem;
-    margin-bottom: 0.2rem;
-  }
-
-  .bold {
-    color: #fdff8d;
-    font-size: 0.44rem;
-    font-weight: bold;
-    text-shadow: 0 0;
-  }
-
-  .day {
-    margin: 0 0.05rem;
-  }
-
-  .top {
-    display: inline-block;
-    margin-bottom: 0.2rem;
-  }
-
-  .rotate {
-    font-size: 0.26rem;
-  }
-
-  .topBox {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0.5rem 0.4rem;
-
-    .item {
-      position: relative;
-      flex: 1;
-      margin: 0 0.15rem;
-
-      img {
-        display: block;
-        width: 100%;
-      }
-
-      p {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, 0.05rem);
-        font-size: 0.22rem;
-        color: #fff;
-      }
+    .rotate {
+      font-size: 0.26rem;
     }
   }
 
   .canvas {
     display: block;
-    margin: .2rem auto;
+    margin: 0.2rem auto;
   }
 
   .btn {
@@ -95,14 +68,9 @@
     width: 3.6rem;
     overflow: hidden;
     margin-left: -1.8rem;
-
-    .btnImg {
-      display: block;
-      width: 100%;
-    }
   }
 
-  .tipsImg{
+  .tipsImg {
     position: absolute;
     bottom: 2.6rem;
     right: 1rem;

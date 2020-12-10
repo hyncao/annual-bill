@@ -1,25 +1,30 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import cn from 'classnames';
-import { useSpring, animated } from 'react-spring';
 import styles from './index.module.scss';
 
 /**
  * @param className
  * @param start Boolean
+ * @param delay Number 动画延迟开始, 单位ms
  * @param splitNum Number 分割小块的数量
  * @param during Number 动画时长 单位秒
+ * @param animateDirection 动画翻转方向
+ * @param itemDirection 栅格排列
  */
 const FoldAnimate = ({
   className,
   bgImg,
   start = false,
+  delay = 0,
   splitNum = 1,
-  direction = 'left',
+  animateDirection = 'left',
+  itemDirection = 'row',
   during = 0.5,
 }) => {
   const [hide, setHide] = useState(false);
+  const [myStart, setMyStart] = useState(false);
   const transformOrigin = useMemo(() => {
-    switch (direction) {
+    switch (animateDirection) {
       case 'left':
         return 'left center';
       case 'right':
@@ -30,27 +35,48 @@ const FoldAnimate = ({
         return 'center bottom';
       default:
     }
-  }, [direction]);
+  }, [animateDirection]);
 
   useEffect(() => {
     if (start) {
-      setTimeout(() => setHide(true), during * 1000);
+      setTimeout(() => setHide(true), during * 1000 + delay);
+      setTimeout(() => setMyStart(true), delay);
     }
-  }, [start, during]);
+  }, [start, during, delay]);
 
   return (
-    <div className={cn(className, styles.box, { [styles.hide]: hide })}>
+    <div
+      className={cn(
+        className,
+        styles.box,
+        { [styles.hide]: hide },
+        { [styles.column]: itemDirection === 'column' }
+      )}
+    >
       {new Array(splitNum).fill().map((i, k) => (
         <div
           key={k}
-          className={cn(styles.item, { [styles.start]: start })}
+          className={styles.item}
           style={{
+            '--index': k,
             transition: `${during}s`,
-            background: `url(${bgImg}) top center no-repeat`,
-            backgroundPositionX: `calc(var(--index) * ${100 / splitNum}%)`,
+            backgroundImage: `url(${bgImg})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundPositionX:
+              itemDirection === 'row'
+                ? `calc(var(--index) * ${100 / splitNum}%)`
+                : 'top',
+            backgroundPositionY:
+              itemDirection === 'row'
+                ? 'top'
+                : `calc(var(--index) * ${100 / splitNum}%)`,
             transformOrigin,
             backgroundSize: 'cover',
-            transform: start ? 'rotateY(90deg)' : 'none',
+            transform: myStart
+              ? itemDirection === 'row'
+                ? 'rotateY(90deg)'
+                : 'rotateX(90deg)'
+              : 'none',
           }}
         />
       ))}

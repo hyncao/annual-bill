@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  background: #3686ff url('../../../../../assets/images/p6/bg.png') center
+  background: #3686ff url('../../../../../assets/images/p0/bg.png') center
     bottom no-repeat;
   background-size: 100%;
   overflow: hidden;
@@ -20,7 +20,7 @@
   }
 
   .up {
-    height: 2.4rem;
+    height: 1.2rem;
     overflow: hidden;
   }
 
@@ -29,44 +29,94 @@
     color: #fff;
   }
 
-  .upItem {
-  }
-
-  .top {
-    margin-bottom: 0.6rem;
-  }
-
   .white {
+    display: inline-block;
     color: #fff;
     font-size: 0.3rem;
     margin-bottom: 0.2rem;
   }
 
   .bold {
-    color: #fff881;
+    color: #fdff8d;
     font-size: 0.44rem;
     font-weight: bold;
     text-shadow: 0 0;
     margin-bottom: 0.2rem;
+    margin-right: 0.1rem;
   }
 
   .rotate {
-    font-size: 0.26rem;
+    display: inline-block;
+    font-size: 0.24rem;
+    margin-bottom: 0.1rem;
   }
 
-  .mobileImg {
+  .topBox {
     position: absolute;
-    width: 7rem;
-    left: 50%;
-    top: 9rem;
-    margin-left: -3.5rem;
+    z-index: 1;
+    top: 3.4rem;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .item {
+      position: relative;
+      width: 2.5rem;
+
+      img {
+        display: block;
+        width: 100%;
+      }
+
+      .one {
+        position: absolute;
+        top: 0.8rem;
+        width: 100%;
+        left: 0;
+        color: #fff;
+        font-size: 0.46rem;
+        text-align: center;
+      }
+
+      p {
+        position: absolute;
+        top: 1.4rem;
+        left: 0;
+        text-align: center;
+        width: 100%;
+        font-size: 0.24rem;
+        color: #fff;
+      }
+    }
   }
 
-  .personImg {
+  .canvas {
+    display: block;
+    margin: 0.7rem auto 0;
+  }
+
+  .btnBox {
     position: absolute;
-    width: 3.5rem;
-    left: 50%;
-    top: 4.5rem;
-    margin-left: -1.45rem;
+    left: 0;
+    bottom: 1.85rem;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+
+    img {
+      width: 3rem;
+      vertical-align: top;
+    }
+  }
+
+  .bottom {
+    position: absolute;
+    left: 0;
+    bottom: 1.45rem;
+    width: 100%;
+    text-align: center;
+    color: #fff;
   }
 }

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React from 'react';
 import { useSpringWave } from 'js/hooks';
 import cn from 'classnames';
 import Word from '../Word';

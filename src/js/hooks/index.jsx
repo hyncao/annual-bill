@@ -26,6 +26,15 @@ const unitDegList = ['skew', 'rotate'];
  * @param otherAnimate Object { String: Function } 其他需要参与的动画
  * Function 必须 return String;
  * e.g: { width: x => `${x * 20}px`, transform: x => `rotate(${x * 180}deg)` }
+ *
+ * ↓↓↓↓↓ 自定义动画曲线配置项 ↓↓↓↓↓
+ *
+ * range.length === output.length
+ * @param range Array [Number] 设置动画改变节点, 类似 @keyframe 中的 0% --> 100% , 值从0到1
+ * e.g: [0, 0.5, 1]
+ * @param output Array [number] 设置动画各个节点的输出值, 即transformDeclare中声明属性的值
+ * e.g: [0, 100, 500]
+ *
  * @return Array [style, animated]
  */
 export const useSpringWave = ({
@@ -34,6 +43,8 @@ export const useSpringWave = ({
   config,
   transformDeclare = [],
   otherAnimate = {},
+  range,
+  output,
 }) => {
   if (!Array.isArray(transformDeclare)) {
     console.error(
@@ -82,23 +93,25 @@ export const useSpringWave = ({
   });
 
   // 配置动画实现
-  const range = [0, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
-  const output = [
-    from,
-    to,
-    to + (symbol ? delta / 50 : -delta / 50),
-    to,
-    to - (symbol ? delta / 60 : -delta / 60),
-    to + (symbol ? delta / 60 : -delta / 70),
-    to,
-  ];
+  const fixedRange = range ? [...range] : [0, 0.6, 0.7, 0.8, 0.88, 0.95, 1];
+  const fixedOutput = output
+    ? [...output]
+    : [
+        from,
+        to,
+        to + (symbol ? delta / 50 : -delta / 50),
+        to,
+        to - (symbol ? delta / 60 : -delta / 60),
+        to + (symbol ? delta / 70 : -delta / 70),
+        to,
+      ];
 
   const styleProps = {
     ...otherAnimateStyle,
     transform: x
       .interpolate({
-        range,
-        output,
+        range: fixedRange,
+        output: fixedOutput,
       })
       .interpolate(
         (x) => `${otherAnimateCludeTransform} ${transformType}(${x}${unit})`

@@ -1,102 +1,46 @@
-import React, { useRef, useEffect } from 'react';
-import { useSpringWave } from 'js/hooks';
+import React from 'react';
 import cn from 'classnames';
-import { TypographyAnimate } from 'js/components';
-import { MyCtx, rem2Px } from 'js/utils';
-import { canvasShowImgSpeed } from 'config';
+import { useSpringWave } from 'js/hooks';
+import { TypographyAnimate, Btn } from 'js/components';
 import styles from './index.module.scss';
-import picImg from 'assets/images/p5/pic.png';
-import btnImg from 'assets/images/p5/btn.png';
-import top1Img from 'assets/images/p5/top1.png';
-import top2Img from 'assets/images/p5/top2.png';
-import top3Img from 'assets/images/p5/top3.png';
-import top4Img from 'assets/images/p5/top4.png';
-
-const topImgList = [top1Img, top2Img, top3Img, top4Img];
+import personImg from 'assets/images/p1/person.png';
+import mobileImg from 'assets/images/p1/mobile.png';
 
 const Part = ({ start }) => {
-  const canvasRef = useRef();
-  const imgRef = useRef();
   const [dotStyle, animated] = useSpringWave({
     delay: 2000,
     start,
     config: { tension: 200, friction: 50 },
     transformDeclare: ['translateX', -70, 0],
   });
-  const topConfig = {
+
+  const animateConfig = { tension: 200, friction: 60 };
+  const clientWidth = window.document.documentElement.clientWidth;
+  const range = [0, 0.93, 0.96, 0.98, 0.99, 1];
+  const personOutput = [clientWidth, 0, -2, 0, 1, 0];
+  const mobileOutput = [-clientWidth, 0, 2, 0, -1, 0];
+  const [personStyle] = useSpringWave({
     start,
-    config: { tension: 200, friction: 100 },
-    transformDeclare: ['translateY', 100, 0],
-    otherAnimate: {
-      opacity: (x) => x,
-    },
-  };
-  const [top1Style] = useSpringWave({
-    ...topConfig,
-    delay: 1000,
+    config: animateConfig,
+    transformDeclare: ['translateX', clientWidth, 0],
+    range,
+    output: personOutput,
   });
-  const [top2Style] = useSpringWave({
-    ...topConfig,
-    delay: 1050,
+
+  const [mobileStyle] = useSpringWave({
+    start,
+    config: animateConfig,
+    transformDeclare: ['translateX', -clientWidth, 0],
+    range,
+    output: mobileOutput,
   });
-  const [top3Style] = useSpringWave({
-    ...topConfig,
-    delay: 1100,
-  });
-  const [top4Style] = useSpringWave({
-    ...topConfig,
-    delay: 1150,
-  });
-  const topStyleList = [top1Style, top2Style, top3Style, top4Style];
 
   const [btnStyle] = useSpringWave({
-    delay: 2600,
+    delay: 2300,
     start,
-    config: { tension: 200, friction: 100 },
-    transformDeclare: ['translateY', 100, 0],
+    config: { tension: 200, friction: 50 },
+    transformDeclare: ['translateY', 70, 0],
   });
-
-  useEffect(() => {
-    imgRef.current = new Image();
-    imgRef.current.src = picImg;
-    if (start) {
-      const init = () => {
-        const draw = (i = 0) => {
-          // canvas距离左右边距, 单位rem
-          const marginLeft = rem2Px(0.6);
-          const canvasWidth =
-            window.document.documentElement.clientWidth - marginLeft * 2;
-          canvasRef.current.width = canvasWidth;
-          canvasRef.current.height = canvasWidth;
-          const ctx = canvasRef.current.getContext('2d');
-          const myCtx = new MyCtx(ctx);
-          myCtx
-            .save()
-            .beginPath()
-            .moveTo(canvasWidth / 2, canvasWidth / 2)
-            .arc(
-              canvasWidth / 2,
-              canvasWidth / 2,
-              canvasWidth / 2,
-              Math.PI * 1.5,
-              Math.PI * (1.5 + (i / 360) * canvasShowImgSpeed)
-            )
-            .lineTo(canvasWidth / 2, canvasWidth / 2)
-            .closePath()
-            .clip()
-            .drawImage(imgRef.current, 0, 0, canvasWidth, canvasWidth)
-            .restore();
-          if (i < 360) {
-            setTimeout(() => {
-              draw(i + 2);
-            }, 5);
-          }
-        };
-        draw();
-      };
-      imgRef.current.onload = init;
-    }
-  }, [start]);
 
   return (
     <div className={styles.content}>
@@ -112,10 +56,16 @@ const Part = ({ start }) => {
           config={{ tension: 250, friction: 60 }}
           start={start}
         >
-          <p className={cn(styles.white, styles.top)}>这一年</p>
+          <p className={styles.white}>这一年</p>
           <p>
-            <span className={styles.bold}>0-6</span>
-            <span className={styles.white}>是你最黏手机的时候</span>
+            <span className={styles.white}>你的流量用了</span>
+            <span className={styles.bold}>23GB</span>
+            <span className={styles.white}>，</span>
+          </p>
+          <p>
+            <span className={styles.white}>大概只有</span>
+            <span className={styles.bold}>18%</span>
+            <span className={styles.white}>的人可以做到。</span>
           </p>
         </TypographyAnimate>
 
@@ -129,42 +79,31 @@ const Part = ({ start }) => {
           transformType="translateY"
           from={40}
           to={0}
-          config={{ friction: 100 }}
+          config={{ friction: 150 }}
           start={start}
           rotate={true}
         >
-          <p className={styles.rotate}>我知道，你几乎整天都捧着手机</p>
-          <p className={styles.rotate}>无拘无束，但耳边总感觉少了点谁的唠叨</p>
+          <p className={styles.yellow}>你用的5G，速度自然不是问题</p>
+          <p className={styles.white}>不管工作还是追剧，少熬夜~</p>
         </TypographyAnimate>
       </div>
-      <div className={styles.topBox}>
-        {topImgList.map((i, k) => (
-          <animated.div key={k} className={styles.item} style={topStyleList[k]}>
-            <img src={i} alt="top" />
-            <p>0-6点</p>
-          </animated.div>
-        ))}
+      <animated.img
+        className={cn('observe', styles.mobile)}
+        src={mobileImg}
+        style={mobileStyle}
+        alt="mobile"
+      />
+      <animated.img
+        className={cn('observe', styles.person)}
+        src={personImg}
+        style={personStyle}
+        alt="person"
+      />
+      <div className={styles.btn}>
+        <animated.div style={btnStyle}>
+          <Btn>购流量,享受腾讯会员</Btn>
+        </animated.div>
       </div>
-      <canvas className={styles.canvas} ref={canvasRef} />
-      <div className={styles.btnBox}>
-        <animated.img
-          style={btnStyle}
-          className={styles.btn}
-          src={btnImg}
-          alt="btnImg"
-        />
-      </div>
-      <TypographyAnimate
-        className={styles.bottom}
-        delay={3000}
-        transformType="translateY"
-        from={80}
-        to={0}
-        config={{ tension: 250, friction: 60 }}
-        start={start}
-      >
-        <p>救急包、深夜包、天包、月.....即刻补充~</p>
-      </TypographyAnimate>
     </div>
   );
 };

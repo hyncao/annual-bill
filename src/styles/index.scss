@@ -4,3 +4,39 @@
   height: 100%;
   touch-action: none;
 }
+
+@function multiple($x) {
+  @return $x * 2;
+}
+
+.flowAnimate {
+  animation: flow 2s ease infinite;
+
+  @keyframes flow {
+    0% {
+      transform: translateY(multiple(1) * -1px);
+    }
+    50% {
+      transform: translateY(multiple(1) * 1px);
+    }
+    100% {
+      transform: translateY(multiple(1) * -1px);
+    }
+  }
+}
+
+.flowAnimateX5 {
+  animation: flowX5 2s ease infinite;
+
+  @keyframes flowX5 {
+    0% {
+      transform: translateY(multiple(5) * -1px);
+    }
+    50% {
+      transform: translateY(multiple(5) * 1px);
+    }
+    100% {
+      transform: translateY(multiple(5) * -1px);
+    }
+  }
+}

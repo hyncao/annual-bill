@@ -1,8 +1,12 @@
 .box {
   display: flex;
 
-  &.hide{
+  &.hide {
     display: none;
+  }
+
+  &.column {
+    flex-direction: column;
   }
 
   .item {

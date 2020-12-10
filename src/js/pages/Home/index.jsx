@@ -12,7 +12,6 @@ import * as Part from './Part';
 import { FoldAnimate } from 'js/components';
 import { reducer, initState } from './store';
 import {
-  homePageFoldDuring,
   splitNum,
   slidePageDistance,
   slidePageDuring,
@@ -85,7 +84,7 @@ const Home = () => {
         Math.abs(touchstartRef.current - endY) > slidePageDistance &&
         canTrigger
       ) {
-        console.log('触发了!');
+        console.log('触发滚动了!');
         window.document.removeEventListener('touchstart', slidePageTouchstart);
         window.document.removeEventListener('touchend', slidePageTouchend);
         let slidePageCurrentIndex =
@@ -113,6 +112,7 @@ const Home = () => {
   );
 
   useEffect(() => {
+    // 阻止浏览器滑动行为
     document.body.addEventListener(
       'touchmove',
       (e) => {
@@ -120,7 +120,20 @@ const Home = () => {
       },
       { passive: false }
     );
-    setTimeout(() => setState({ homePageFoldStart: true }), homePageFoldDuring);
+
+    // 为img标签统一添加onload事件
+    const imgList = [...document.getElementsByClassName('observe')];
+    const promiseList = imgList.map(
+      (i) =>
+        new Promise((res) => {
+          i.onload = () => {
+            res(true);
+          };
+        })
+    );
+    Promise.all(promiseList).then((res) => {
+      console.log('图片全部加载好了');
+    });
   }, []);
 
   useEffect(() => {
@@ -128,8 +141,9 @@ const Home = () => {
       let startArr = [...state.startArr];
       startArr[0] = true;
       setState({ startArr });
-      window.document.addEventListener('touchstart', slidePageTouchstart);
-      window.document.addEventListener('touchend', slidePageTouchend);
+      const document = window.document;
+      document.addEventListener('touchstart', slidePageTouchstart);
+      document.addEventListener('touchend', slidePageTouchend);
     }
   }, [state.showBill, slidePageTouchend]);
 
@@ -182,28 +196,35 @@ const Home = () => {
     handleModal.show();
   }, [handleModal]);
 
+  const startBill = useCallback(() => {
+    if (state.agreementRead) {
+      setState({ showBill: true });
+    }
+  }, [state.agreementRead]);
+
   const renderHomePage = () => (
     <div className={styles.home}>
       {!state.showBill && (
-        <img className={styles.telecom} src={telecomImg} alt="telecom" />
+        <img className={cn(styles.telecom)} src={telecomImg} alt="telecom" />
       )}
       <FoldAnimate
         className={styles.fold}
         bgImg={bgImg}
         splitNum={splitNum}
-        start={state.homePageFoldStart}
+        start={true}
+        delay={500}
       />
       <div className={styles.content}>
-        <img className={styles.pic} src={picImg} alt="pic" />
+        <img className={cn('observe', styles.pic)} src={picImg} alt="pic" />
         <animated.img
-          className={styles.slogan}
+          className={cn('observe', styles.slogan)}
           style={sloganStyle}
           src={sloganImg}
           alt="slogan"
         />
         <div className={styles.title}>
           <animated.img
-            className={styles.titleImg}
+            className={cn('observe', styles.titleImg)}
             style={titleStyle}
             src={titleImg}
             alt="title"
@@ -211,17 +232,21 @@ const Home = () => {
         </div>
         <div className={styles.btn}>
           <animated.img
-            className={styles.btnImg}
+            className={cn(styles.btnImg)}
             style={btnStyle}
             src={btnImg}
             alt="btn"
-            onClick={() => setState({ showBill: true })}
+            onClick={startBill}
           />
         </div>
         <animated.div className={styles.agreement} style={agreementStyle}>
           <div onClick={() => setState({ agreementRead: true })}>
             {state.agreementRead ? (
-              <img className={styles.checked} src={checkedImg} alt="checked" />
+              <img
+                className={cn('observe', styles.checked)}
+                src={checkedImg}
+                alt="checked"
+              />
             ) : (
               <span className={styles.dot} />
             )}

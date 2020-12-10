@@ -2,12 +2,11 @@ import React, { useRef } from 'react';
 import { useSpringWave, useRadar } from 'js/hooks';
 import { useSpring } from 'react-spring';
 import cn from 'classnames';
-import { TypographyAnimate } from 'js/components';
+import { TypographyAnimate, Btn } from 'js/components';
 import { rem2Px } from 'js/utils';
 import { canvasShowImgSpeed } from 'config';
 import styles from './index.module.scss';
 import picImg from 'assets/images/p0/pic.png';
-import btnImg from 'assets/images/p0/btn.png';
 import tipsImg from 'assets/images/p0/tips.png';
 
 const Part = ({ start }) => {
@@ -61,7 +60,7 @@ const Part = ({ start }) => {
           <p className={styles.white}>这个号码，</p>
           <p>
             <span className={styles.white}>已经陪伴了你超过</span>
-            <span className={cn(styles.bold, styles.day)}> 854 </span>
+            <span className={cn(styles.bold, styles.day)}>854</span>
             <span className={styles.white}>天。</span>
           </p>
         </TypographyAnimate>
@@ -76,7 +75,7 @@ const Part = ({ start }) => {
           transformType="translateY"
           from={40}
           to={0}
-          config={{ friction: 100 }}
+          config={{ friction: 150 }}
           start={start}
           rotate={true}
         >
@@ -91,15 +90,12 @@ const Part = ({ start }) => {
         ref={canvasRef}
       />
       <div className={styles.btn}>
-        <animated.img
-          className={styles.btnImg}
-          style={btnStyle}
-          src={btnImg}
-          alt="btn"
-        />
+        <animated.div style={btnStyle}>
+          <Btn>下载电信营业厅APP</Btn>
+        </animated.div>
       </div>
       <animated.img
-        className={styles.tipsImg}
+        className={cn(styles.tipsImg)}
         style={tipsStyle}
         src={tipsImg}
         alt="tips"

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React from 'react';
 import cn from 'classnames';
 import Paragraph from './Paragraph';
 import styles from './index.module.scss';
